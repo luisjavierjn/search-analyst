@@ -7,11 +7,13 @@ import { AppRouting } from "./app.routing";
 import {ReactiveFormsModule} from "@angular/forms";
 import { SearchService } from './services/search.service';
 import {HttpClientModule} from "@angular/common/http";
+import { AnalyzerComponent } from './analyzer/analyzer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    InitialSetupComponent
+    InitialSetupComponent,
+    AnalyzerComponent
   ],
   imports: [
     BrowserModule,

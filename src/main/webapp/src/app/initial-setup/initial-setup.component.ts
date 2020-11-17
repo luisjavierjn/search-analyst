@@ -25,8 +25,6 @@ export class InitialSetupComponent implements OnInit {
     }
     this.searchService.getCompaniesByInitialSetup(payload).subscribe(data => {
       if(data.status === 200) {
-        alert(data.result);
-        console.log(data.result);
         this.router.navigate(['analyzer']);
       }else {
         this.invalidInitialSetup = true;
@@ -38,7 +36,7 @@ export class InitialSetupComponent implements OnInit {
   ngOnInit(): void {
     this.initialSetupForm = this.formBuilder.group({
       offset: ['0', Validators.compose([Validators.required])],
-      size: ['100', Validators.required]
+      size: ['10', Validators.required]
     });
   }
 
