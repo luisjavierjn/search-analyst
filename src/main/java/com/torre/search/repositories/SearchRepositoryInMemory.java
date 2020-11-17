@@ -3,8 +3,10 @@ package com.torre.search.repositories;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import org.springframework.stereotype.Component;
 
-public class ShowRepositoryInMemory {
+@Component
+public class SearchRepositoryInMemory {
 
     private static final ObjectMapper mapper = new ObjectMapper();
     private static final ArrayNode jArrayShows = mapper.createArrayNode();
