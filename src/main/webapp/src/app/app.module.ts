@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { InitialSetupComponent } from './initial-setup/initial-setup.component';
+import { AppRouting } from "./app.routing";
 
 @NgModule({
   declarations: [
@@ -10,7 +11,8 @@ import { InitialSetupComponent } from './initial-setup/initial-setup.component';
     InitialSetupComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    AppRouting,
   ],
   providers: [],
   bootstrap: [AppComponent]
