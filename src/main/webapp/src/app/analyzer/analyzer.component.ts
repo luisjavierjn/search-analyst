@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Company } from '../models/company.model';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
+import {SearchService} from "../services/search.service";
 
 @Component({
   selector: 'app-analyzer',
@@ -8,20 +11,26 @@ import { Company } from '../models/company.model';
 })
 export class AnalyzerComponent implements OnInit {
 
-  locations = ['Colombia', 'Estados Unidos', 'Canada', 'Panama'];
+  currencies = ['[Select]' ,'USD$', 'COP$', 'MXN$'];
 
-  model = new Company("abc", 'Software Developer', "USD", 'yes');
+  locations = ['[Select]' ,'Colombia', 'Estados Unidos', 'Canada', 'Panama'];
 
   submitted = false;
 
   onSubmit() { this.submitted = true; }
 
-  constructor() { }
+  analyzerForm: FormGroup;
+  invalidAnalyzer: boolean = false;
+  constructor(private formBuilder: FormBuilder, private router: Router, private searchService: SearchService) { }
 
   ngOnInit(): void {
+    this.analyzerForm = this.formBuilder.group({
+      name: ['', Validators.compose([Validators.required])]
+    });
   }
 
-  // TODO: Remove this when we're done
-  get diagnostic() { return JSON.stringify(this.model); }
+  getInitialSetup(): void {
+      this.router.navigate(['']);
+  }
 
 }
