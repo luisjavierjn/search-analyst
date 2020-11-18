@@ -1,8 +1,8 @@
 package com.torre.search.repositories;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.torre.search.domain.Company;
-import com.torre.search.domain.Compensation;
+import com.torre.search.domain.entities.Company;
+import com.torre.search.domain.entities.Compensation;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

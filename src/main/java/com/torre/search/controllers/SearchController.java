@@ -3,7 +3,9 @@ package com.torre.search.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.torre.search.domain.ApiResponse;
+import com.torre.search.domain.dto.ApiResponse;
+import com.torre.search.domain.dto.CompanyDTO;
+import com.torre.search.domain.dto.TotalDTO;
 import com.torre.search.services.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -30,9 +34,9 @@ public class SearchController {
     private String urlOpportunities;
 
     @GetMapping(value = "/{offset}/{size}/{aggregate}", produces = { MediaType.APPLICATION_JSON_VALUE })
-    public ApiResponse<String> getShowById(@PathVariable int offset,
-                                           @PathVariable int size,
-                                           @PathVariable boolean aggregate) throws JsonProcessingException {
+    public ApiResponse<String> getSearchByFilters(@PathVariable int offset,
+                                                  @PathVariable int size,
+                                                  @PathVariable boolean aggregate) throws JsonProcessingException {
         RestTemplate restTemplate = new RestTemplate();
         String torreResourceUrl = urlOpportunities.replace("{offset}",Integer.toString(offset))
                 .replace("{size}",Integer.toString(size))
@@ -59,5 +63,21 @@ public class SearchController {
     @GetMapping(value = "/types", produces = { MediaType.APPLICATION_JSON_VALUE })
     public ApiResponse<Set<String>> getTypes() {
         return new ApiResponse<>(HttpStatus.OK.value(),INFO_RETRIEVED_SUCCESSFULLY, searchService.getTypes());
+    }
+
+    @GetMapping(value = "t/{name}/{currency}/{type}", produces = { MediaType.APPLICATION_JSON_VALUE })
+    public ApiResponse<TotalDTO> getTotals(@PathVariable String name,
+                                        @PathVariable String currency,
+                                        @PathVariable String type) {
+        TotalDTO totals = searchService.getTotals(name,currency,type);
+        return new ApiResponse<>(HttpStatus.OK.value(),INFO_RETRIEVED_SUCCESSFULLY, totals);
+    }
+
+    @GetMapping(value = "p/{name}/{currency}/{type}", produces = { MediaType.APPLICATION_JSON_VALUE })
+    public ApiResponse<Map<String,List<CompanyDTO>>> getIntersections(@PathVariable String name,
+                                                                      @PathVariable String currency,
+                                                                      @PathVariable String type) {
+        Map<String, List<CompanyDTO>> intersections = searchService.process(name,currency,type);
+        return new ApiResponse<>(HttpStatus.OK.value(),INFO_RETRIEVED_SUCCESSFULLY, intersections);
     }
 }

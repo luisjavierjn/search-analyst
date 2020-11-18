@@ -26,4 +26,14 @@ export class SearchService {
     this.query = "types";
     return this.http.get<ApiResponse>(this.baseQueryUrl + this.query);
   }
+
+  getTotals(payload): Observable<ApiResponse> {
+    this.query = "t/" + payload.name + "/" + payload.currency + "/" + payload.type;
+    return this.http.get<ApiResponse>(this.baseQueryUrl + this.query);
+  }
+
+  getIntersections(payload): Observable<ApiResponse> {
+    this.query = "p/" + payload.name + "/" + payload.currency + "/" + payload.type;
+    return this.http.get<ApiResponse>(this.baseQueryUrl + this.query);
+  }
 }

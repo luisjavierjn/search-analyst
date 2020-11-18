@@ -15,10 +15,6 @@ export class AnalyzerComponent implements OnInit {
 
   types: Array<string>;
 
-  submitted = false;
-
-  onSubmit() { this.submitted = true; }
-
   analyzerForm: FormGroup;
   invalidAnalyzer: boolean = false;
   constructor(private formBuilder: FormBuilder, private router: Router, private searchService: SearchService) { }
@@ -49,6 +45,38 @@ export class AnalyzerComponent implements OnInit {
       }
     });
 
+  }
+
+  onSubmit() {
+    if (this.analyzerForm.invalid) {
+      return;
+    }
+
+    const payload = {
+      name: this.analyzerForm.controls.name.value,
+      currency: this.analyzerForm.controls.currency.value,
+      type: this.analyzerForm.controls.type.value
+    }
+
+    this.searchService.getTotals(payload).subscribe(data => {
+      if(data.status === 200) {
+        console.log(data.result);
+        /*
+        this.searchService.getTotals(payload).subscribe(info => {
+          if(info.status === 200) {
+            console.log(info.result);
+
+          }else {
+            this.invalidAnalyzer = true;
+            alert(info.message);
+          }
+        });
+        */
+      }else {
+        this.invalidAnalyzer = true;
+        alert(data.message);
+      }
+    });
   }
 
   getInitialSetup(): void {

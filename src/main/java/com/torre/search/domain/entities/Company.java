@@ -1,4 +1,4 @@
-package com.torre.search.domain;
+package com.torre.search.domain.entities;
 
 import lombok.Builder;
 import lombok.Getter;
