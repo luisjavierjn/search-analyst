@@ -40,7 +40,7 @@ public class SearchController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> entity = new HttpEntity<String>(requestJsonBody,headers);
+        HttpEntity<String> entity = new HttpEntity<>(requestJsonBody,headers);
         ResponseEntity<String> response = restTemplate.postForEntity(torreResourceUrl, entity, String.class);
 
         ObjectMapper mapper = new ObjectMapper();
