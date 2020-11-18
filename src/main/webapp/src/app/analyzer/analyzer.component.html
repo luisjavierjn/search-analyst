@@ -1,38 +1,54 @@
 <button type="button" class="btn btn-link" (click)="getInitialSetup()"> Go to Initial Setup</button>
+<table style="width:100%;">
 
-<div class="row">
-  <div class="col-md-4 analyzer-container">
-    <h2 style="margin: auto">Analyzer</h2>
-    <br>
-    <form [formGroup]="analyzerForm" (ngSubmit)="onSubmit()">
+  <tr>
+    <td><div class="col-md-2 analyzer-container"></div></td>
+    <td>
 
-      <div class="form-group">
-        <label for="name">Name of the job:</label>
-        <input type="text" class="form-control" formControlName="name" id="name" autocomplete="off">
-        <div class="error" *ngIf="analyzerForm.controls['name'].hasError('required') && analyzerForm.controls['name'].touched">Name of the job is required</div>
+      <div class="row">
+        <div class="col-md-12 analyzer-container">
+          <h2 style="margin: auto">Analyzer</h2>
+          <br>
+          <form [formGroup]="analyzerForm" (ngSubmit)="onSubmit()">
+
+            <div class="form-group" class="text-success">
+              <label for="name">Name of the job:</label>
+              <input type="text" class="form-control" formControlName="name" id="name" autocomplete="off">
+              <div class="error" *ngIf="analyzerForm.controls['name'].hasError('required') && analyzerForm.controls['name'].touched">Name of the job is required</div>
+            </div>
+
+            <div class="form-group" class="text-danger">
+              <label for="currency">Currencies:</label>
+              <select class="form-control" formControlName="currency" id="currency" required>
+                <option value="" disabled>[Choose a currency]</option>
+                <option *ngFor="let cur of currencies" [value]="cur">{{cur}}</option>
+              </select>
+            </div>
+
+            <div class="form-group" class="text-primary">
+              <label for="type">Types:</label>
+              <select class="form-control" formControlName="type" id="type" required>
+                <option value="" disabled>[Choose a type]</option>
+                <option *ngFor="let t of types" [value]="t">{{t}}</option>
+              </select>
+            </div>
+            <br>
+            <button class="btn btn-success" [disabled]="analyzerForm.invalid">Process</button>
+            <div *ngIf="invalidAnalyzer" class="error">
+              <div>Invalid values.</div>
+            </div>
+
+          </form>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label for="currency">Currencies:</label>
-        <select class="form-control" formControlName="currency" id="currency" required>
-          <option value="" disabled>[Choose a currency]</option>
-          <option *ngFor="let cur of currencies" [value]="cur">{{cur}}</option>
-        </select>
+    </td>
+
+    <td>
+      <div style="text-align: center;">
+        <canvas #canvas width="800" height="800" style="border-style: solid; width: 800px; height: 800px; border: 1px solid blue;"></canvas>
       </div>
 
-      <div class="form-group">
-        <label for="type">Types:</label>
-        <select class="form-control" formControlName="type" id="type" required>
-          <option value="" disabled>[Choose a type]</option>
-          <option *ngFor="let t of types" [value]="t">{{t}}</option>
-        </select>
-      </div>
-
-      <button class="btn btn-success" [disabled]="analyzerForm.invalid">Process</button>
-      <div *ngIf="invalidAnalyzer" class="error">
-        <div>Invalid values.</div>
-      </div>
-
-    </form>
-  </div>
-</div>
+    </td>
+  </tr>
+</table>
