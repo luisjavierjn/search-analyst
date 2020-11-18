@@ -1,1 +1,6 @@
-<p>analyzer works!</p>
+<div class="form-group">
+  <label for="location">Locations</label>
+  <select class="form-control" id="location" required>
+    <option *ngFor="let loc of locations" [value]="loc">{{loc}}</option>
+  </select>
+</div>

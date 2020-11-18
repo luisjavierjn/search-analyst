@@ -6,7 +6,8 @@ import {ApiResponse} from "../models/api.response";
 @Injectable()
 export class SearchService {
 
-  baseQueryUrl: string = '/search/';//'http://localhost:8080/search/';
+  //baseQueryUrl: string = '/search/';
+  baseQueryUrl: string = 'http://localhost:8080/search/';
   query: string = '0/1/false';
 
   constructor(private http: HttpClient) { }
