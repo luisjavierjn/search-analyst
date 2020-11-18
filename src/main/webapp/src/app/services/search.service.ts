@@ -16,4 +16,14 @@ export class SearchService {
     this.query = payload.offset + "/" + payload.size + "/" + payload.aggregate;
     return this.http.get<ApiResponse>(this.baseQueryUrl + this.query);
   }
+
+  getCurrencies(): Observable<ApiResponse> {
+    this.query = "currencies";
+    return this.http.get<ApiResponse>(this.baseQueryUrl + this.query);
+  }
+
+  getTypes(): Observable<ApiResponse> {
+    this.query = "types";
+    return this.http.get<ApiResponse>(this.baseQueryUrl + this.query);
+  }
 }

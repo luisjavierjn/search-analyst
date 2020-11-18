@@ -25,8 +25,10 @@ public class SearchRepositoryInMemory {
                 JsonNode moneyNode = objNode.get("compensation").get("data");
                 if(moneyNode == null) continue;
 
-                if( !chkNull(objNode.get("status")).toLowerCase().contains("open")) //||
-                    //!chkNull(moneyNode.get("periodicity")).toLowerCase().contains("monthly"))
+                if(chkNull(moneyNode.get("currency")).toLowerCase().equals(""))
+                    continue;
+
+                if(!chkNull(objNode.get("status")).toLowerCase().contains("open"))
                     continue;
 
                 List<String> locations = new ArrayList<>();

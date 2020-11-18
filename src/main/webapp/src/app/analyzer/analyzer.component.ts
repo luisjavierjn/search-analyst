@@ -11,9 +11,9 @@ import {SearchService} from "../services/search.service";
 })
 export class AnalyzerComponent implements OnInit {
 
-  currencies = ['[Select]' ,'USD$', 'COP$', 'MXN$'];
+  currencies: Array<string>;
 
-  locations = ['[Select]' ,'Colombia', 'Estados Unidos', 'Canada', 'Panama'];
+  types: Array<string>;
 
   submitted = false;
 
@@ -24,9 +24,31 @@ export class AnalyzerComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private router: Router, private searchService: SearchService) { }
 
   ngOnInit(): void {
+
     this.analyzerForm = this.formBuilder.group({
       name: ['', Validators.compose([Validators.required])]
     });
+
+    this.searchService.getCurrencies().subscribe(data => {
+      if(data.status === 200) {
+        //console.log(data.result);
+        this.currencies = data.result;
+      }else {
+        this.invalidAnalyzer = true;
+        alert(data.message);
+      }
+    });
+
+    this.searchService.getTypes().subscribe(data => {
+      if(data.status === 200) {
+        //console.log(data.result);
+        this.types = data.result;
+      }else {
+        this.invalidAnalyzer = true;
+        alert(data.message);
+      }
+    });
+
   }
 
   getInitialSetup(): void {

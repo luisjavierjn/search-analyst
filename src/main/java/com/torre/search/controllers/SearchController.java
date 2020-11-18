@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Objects;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/search")
@@ -48,5 +49,15 @@ public class SearchController {
         searchService.saveCompanies(root.get("results"));
 
         return new ApiResponse<>(HttpStatus.OK.value(),INFO_RETRIEVED_SUCCESSFULLY, response.getBody());
+    }
+
+    @GetMapping(value = "/currencies", produces = { MediaType.APPLICATION_JSON_VALUE })
+    public ApiResponse<Set<String>> getCurrencies() {
+        return new ApiResponse<>(HttpStatus.OK.value(),INFO_RETRIEVED_SUCCESSFULLY, searchService.getCurrencies());
+    }
+
+    @GetMapping(value = "/types", produces = { MediaType.APPLICATION_JSON_VALUE })
+    public ApiResponse<Set<String>> getTypes() {
+        return new ApiResponse<>(HttpStatus.OK.value(),INFO_RETRIEVED_SUCCESSFULLY, searchService.getTypes());
     }
 }
