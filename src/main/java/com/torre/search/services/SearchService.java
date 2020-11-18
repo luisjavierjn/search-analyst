@@ -33,6 +33,7 @@ public class SearchService implements ISearchService {
 
     @Override
     public void saveCompanies(JsonNode companies) {
+        searchRepositoryInMemory.clean();
         searchRepositoryInMemory.save(companies);
         List<Company> companyList = searchRepositoryInMemory.findAll();
         System.out.println(companyList);
@@ -58,10 +59,37 @@ public class SearchService implements ISearchService {
     public TotalDTO getTotals(String name, String currency, String type) {
         List<Company> companies = searchRepositoryInMemory.findAll();
 
+        long tripleIntersection = companies.stream()
+                .filter(c -> c.getObjective().toLowerCase().contains(name.toLowerCase()) &&
+                        c.getCompensation().getCurrency().equals(currency) &&
+                        c.getType().equals(type))
+                .count();
+
+        long nameCurrencyIntersection = 0;
+        long nameTypeIntersection = 0;
+        long currencyTypeIntersection = 0;
+
+        if(tripleIntersection == 0) {
+            nameCurrencyIntersection = companies.stream()
+                    .filter(c -> c.getObjective().toLowerCase().contains(name.toLowerCase()) &&
+                            c.getCompensation().getCurrency().equals(currency))
+                    .count();
+
+            nameTypeIntersection = companies.stream()
+                    .filter(c -> c.getObjective().toLowerCase().contains(name.toLowerCase()) &&
+                            c.getType().equals(type))
+                    .count();
+
+            currencyTypeIntersection = companies.stream()
+                    .filter(c -> c.getCompensation().getCurrency().equals(currency) &&
+                            c.getType().equals(type))
+                    .count();
+        }
+
         return TotalDTO.builder()
                 .totalCompanies(companies.size())
                 .totalCompaniesByName(companies.stream()
-                        .filter(c -> c.getObjective().contains(name))
+                        .filter(c -> c.getObjective().toLowerCase().contains(name.toLowerCase()))
                         .count())
                 .totalCompaniesByCurrency(companies.stream()
                         .filter(c -> c.getCompensation().getCurrency().equals(currency))
@@ -69,6 +97,10 @@ public class SearchService implements ISearchService {
                 .totalCompaniesByType(companies.stream()
                         .filter(c -> c.getType().equals(type))
                         .count())
+                .tripleIntersections(tripleIntersection)
+                .nameCurrencyIntersections(nameCurrencyIntersection)
+                .nameTypeIntersections(nameTypeIntersection)
+                .currencyTypeIntersections(currencyTypeIntersection)
                 .build();
     }
 
@@ -78,7 +110,7 @@ public class SearchService implements ISearchService {
         Map<String,List<CompanyDTO>> mappings = new HashMap<>();
 
         List<CompanyDTO> tripleIntersection = companies.stream()
-                .filter(c -> c.getObjective().contains(name) &&
+                .filter(c -> c.getObjective().toLowerCase().contains(name.toLowerCase()) &&
                           c.getCompensation().getCurrency().equals(currency) &&
                           c.getType().equals(type))
                 .map(this::convertToDto)
@@ -86,7 +118,7 @@ public class SearchService implements ISearchService {
 
         if(tripleIntersection.size() == 0) {
             List<CompanyDTO> nameCurrencyIntersection = companies.stream()
-                    .filter(c -> c.getObjective().contains(name) &&
+                    .filter(c -> c.getObjective().toLowerCase().contains(name.toLowerCase()) &&
                             c.getCompensation().getCurrency().equals(currency))
                     .map(this::convertToDto)
                     .collect(Collectors.toList());
@@ -95,7 +127,7 @@ public class SearchService implements ISearchService {
                 mappings.put("NAME_CURRENCY",nameCurrencyIntersection);
 
             List<CompanyDTO> nameTypeIntersection = companies.stream()
-                    .filter(c -> c.getObjective().contains(name) &&
+                    .filter(c -> c.getObjective().toLowerCase().contains(name.toLowerCase()) &&
                             c.getType().equals(type))
                     .map(this::convertToDto)
                     .collect(Collectors.toList());

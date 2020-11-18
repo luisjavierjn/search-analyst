@@ -10,4 +10,8 @@ public class TotalDTO {
     private final long totalCompaniesByName;
     private final long totalCompaniesByCurrency;
     private final long totalCompaniesByType;
+    private final long tripleIntersections;
+    private final long nameCurrencyIntersections;
+    private final long nameTypeIntersections;
+    private final long currencyTypeIntersections;
 }

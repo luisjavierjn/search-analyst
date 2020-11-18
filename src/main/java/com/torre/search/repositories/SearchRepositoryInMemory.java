@@ -17,6 +17,10 @@ public class SearchRepositoryInMemory {
         return companies;
     }
 
+    public void clean() {
+        companies.clear();
+    }
+
     public void save(JsonNode root) {
         if (root.isArray()) {
             for (final JsonNode objNode : root) {

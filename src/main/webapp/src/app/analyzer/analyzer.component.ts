@@ -22,7 +22,9 @@ export class AnalyzerComponent implements OnInit {
   ngOnInit(): void {
 
     this.analyzerForm = this.formBuilder.group({
-      name: ['', Validators.compose([Validators.required])]
+      name: ['', Validators.compose([Validators.required])],
+      currency: ['', Validators.compose([Validators.required])],
+      type: ['', Validators.compose([Validators.required])]
     });
 
     this.searchService.getCurrencies().subscribe(data => {
