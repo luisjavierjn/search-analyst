@@ -6,13 +6,13 @@
 
       <div class="form-group">
         <label for="offset">Amount of companies to jump over:</label>
-        <input type="text" class="form-control" formControlName="offset" id="offset" autocomplete="off">
+        <input type="number" class="form-control" formControlName="offset" id="offset" autocomplete="off">
         <div class="error" *ngIf="initialSetupForm.controls['offset'].hasError('required') && initialSetupForm.controls['offset'].touched">Amount of companies to jump over is required</div>
       </div>
 
       <div class="form-group">
         <label for="size">Number of companies to analyze:</label>
-        <input type="text" class="form-control" formControlName="size" id="size" autocomplete="off">
+        <input type="number" class="form-control" formControlName="size" id="size" autocomplete="off">
         <div class="error" *ngIf="initialSetupForm.controls['size'].hasError('required') && initialSetupForm.controls['size'].touched">Number of companies to analyze is required</div>
       </div>
 

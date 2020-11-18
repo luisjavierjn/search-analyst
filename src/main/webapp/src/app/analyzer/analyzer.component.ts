@@ -76,14 +76,14 @@ export class AnalyzerComponent implements OnInit {
     this.searchService.getTotals(payload).subscribe(data => {
       if(data.status === 200) {
         this.total = data.result;
-        console.log(this.total);
+        //console.log(this.total);
 
         this.draw();
 
         this.searchService.getCompaniesByFilter(payload).subscribe(info => {
           if(info.status === 200) {
             this.companies = info.result;
-            console.log(this.companies);
+            //console.log(this.companies);
 
           }else {
             this.invalidAnalyzer = true;
@@ -120,17 +120,17 @@ export class AnalyzerComponent implements OnInit {
     this.circleNames.centerX = 200;
     this.circleNames.centerY = 200;
     this.circleNames.radius = 180 * percN;
-    this.ctx.fillText(this.total.totalCompaniesByName + "", this.circleNames.centerX, this.circleNames.centerY);
+    this.ctx.fillText(this.total.totalCompaniesByName + " jobs for " + this.analyzerForm.controls.name.value, this.circleNames.centerX, this.circleNames.centerY);
 
     this.circleCurrencies.centerX = 600;
     this.circleCurrencies.centerY = 200;
     this.circleCurrencies.radius = 180 * percC;
-    this.ctx.fillText(this.total.totalCompaniesByCurrency + "", this.circleCurrencies.centerX, this.circleCurrencies.centerY);
+    this.ctx.fillText(this.total.totalCompaniesByCurrency + " jobs in " + this.analyzerForm.controls.currency.value, this.circleCurrencies.centerX, this.circleCurrencies.centerY);
 
     this.circleTypes.centerX = 400;
     this.circleTypes.centerY = 600;
     this.circleTypes.radius = 180 * percT;
-    this.ctx.fillText(this.total.totalCompaniesByType + "", this.circleTypes.centerX, this.circleTypes.centerY);
+    this.ctx.fillText(this.total.totalCompaniesByType + " jobs of " + this.analyzerForm.controls.type.value, this.circleTypes.centerX, this.circleTypes.centerY);
 
     this.ctx.globalAlpha = 0.5;
 

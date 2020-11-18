@@ -36,8 +36,8 @@ export class InitialSetupComponent implements OnInit {
 
   ngOnInit(): void {
     this.initialSetupForm = this.formBuilder.group({
-      offset: ['0', Validators.compose([Validators.required])],
-      size: ['10', Validators.required]
+      offset: ['0', Validators.compose([Validators.required, Validators.min(0)])],
+      size: ['10', Validators.compose([Validators.required, Validators.min(1)])]
     });
   }
 
