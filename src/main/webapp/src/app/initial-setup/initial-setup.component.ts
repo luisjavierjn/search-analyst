@@ -25,6 +25,7 @@ export class InitialSetupComponent implements OnInit {
     }
     this.searchService.getCompaniesByInitialSetup(payload).subscribe(data => {
       if(data.status === 200) {
+        console.log(data.result);
         this.router.navigate(['analyzer']);
       }else {
         this.invalidInitialSetup = true;
