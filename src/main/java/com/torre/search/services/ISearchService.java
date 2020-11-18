@@ -16,7 +16,7 @@ public interface ISearchService {
 
     Set<String> getTypes();
 
-    Map<String, List<CompanyDTO>> process(String name, String currency, String type);
+    List<CompanyDTO> getCompaniesByFilter(String name, String currency, String type);
 
     TotalDTO getTotals(String name, String currency, String type);
 }

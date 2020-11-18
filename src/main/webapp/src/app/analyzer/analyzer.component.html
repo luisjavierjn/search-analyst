@@ -52,3 +52,19 @@
     </td>
   </tr>
 </table>
+<hr>
+<div class="card-columns">
+  <div class="card" style="width: 30rem;" *ngFor="let item of companies">
+    <div class="card-body">
+      <h5 class="card-title">{{ item.objective }}</h5>
+      <p class="card-text">
+        {{ item.type }}
+      </p>
+      <p class="card-text">remote: {{ item.remote }}</p>
+      <hr>
+      <p class="card-text">
+        <small class="text-muted">{{ item.currency }}</small>
+      </p>
+    </div>
+  </div>
+</div>

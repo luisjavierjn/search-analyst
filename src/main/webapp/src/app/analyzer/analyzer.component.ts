@@ -20,6 +20,7 @@ export class AnalyzerComponent implements OnInit {
   currencies: Array<string>;
   types: Array<string>;
   total: Totals;
+  companies: any;
 
   circleNames: Circle = new Circle;
   circleCurrencies: Circle = new Circle;
@@ -75,19 +76,21 @@ export class AnalyzerComponent implements OnInit {
     this.searchService.getTotals(payload).subscribe(data => {
       if(data.status === 200) {
         this.total = data.result;
+        console.log(this.total);
 
         this.draw();
-        /*
-        this.searchService.getTotals(payload).subscribe(info => {
+
+        this.searchService.getCompaniesByFilter(payload).subscribe(info => {
           if(info.status === 200) {
-            console.log(info.result);
+            this.companies = info.result;
+            console.log(this.companies);
 
           }else {
             this.invalidAnalyzer = true;
             alert(info.message);
           }
         });
-        */
+
       }else {
         this.invalidAnalyzer = true;
         alert(data.message);

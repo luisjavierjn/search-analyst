@@ -74,10 +74,10 @@ public class SearchController {
     }
 
     @GetMapping(value = "p/{name}/{currency}/{type}", produces = { MediaType.APPLICATION_JSON_VALUE })
-    public ApiResponse<Map<String,List<CompanyDTO>>> getIntersections(@PathVariable String name,
-                                                                      @PathVariable String currency,
-                                                                      @PathVariable String type) {
-        Map<String, List<CompanyDTO>> intersections = searchService.process(name,currency,type);
-        return new ApiResponse<>(HttpStatus.OK.value(),INFO_RETRIEVED_SUCCESSFULLY, intersections);
+    public ApiResponse<List<CompanyDTO>> getCompaniesByFilter(@PathVariable String name,
+                                                                          @PathVariable String currency,
+                                                                          @PathVariable String type) {
+        List<CompanyDTO> companies = searchService.getCompaniesByFilter(name,currency,type);
+        return new ApiResponse<>(HttpStatus.OK.value(),INFO_RETRIEVED_SUCCESSFULLY, companies);
     }
 }

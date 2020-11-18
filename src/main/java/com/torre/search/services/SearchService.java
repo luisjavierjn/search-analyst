@@ -105,50 +105,15 @@ public class SearchService implements ISearchService {
     }
 
     @Override
-    public Map<String,List<CompanyDTO>> process(String name, String currency, String type) {
+    public List<CompanyDTO> getCompaniesByFilter(String name, String currency, String type) {
         List<Company> companies = searchRepositoryInMemory.findAll();
-        Map<String,List<CompanyDTO>> mappings = new HashMap<>();
 
-        List<CompanyDTO> tripleIntersection = companies.stream()
-                .filter(c -> c.getObjective().toLowerCase().contains(name.toLowerCase()) &&
-                          c.getCompensation().getCurrency().equals(currency) &&
+        return companies.stream()
+                .filter(c -> c.getObjective().toLowerCase().contains(name.toLowerCase()) ||
+                          c.getCompensation().getCurrency().equals(currency) ||
                           c.getType().equals(type))
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
-
-        if(tripleIntersection.size() == 0) {
-            List<CompanyDTO> nameCurrencyIntersection = companies.stream()
-                    .filter(c -> c.getObjective().toLowerCase().contains(name.toLowerCase()) &&
-                            c.getCompensation().getCurrency().equals(currency))
-                    .map(this::convertToDto)
-                    .collect(Collectors.toList());
-
-            if(nameCurrencyIntersection.size() > 0)
-                mappings.put("NAME_CURRENCY",nameCurrencyIntersection);
-
-            List<CompanyDTO> nameTypeIntersection = companies.stream()
-                    .filter(c -> c.getObjective().toLowerCase().contains(name.toLowerCase()) &&
-                            c.getType().equals(type))
-                    .map(this::convertToDto)
-                    .collect(Collectors.toList());
-
-            if(nameTypeIntersection.size() > 0)
-                mappings.put("NAME_TYPE",nameTypeIntersection);
-
-            List<CompanyDTO> currencyTypeIntersection = companies.stream()
-                    .filter(c -> c.getCompensation().getCurrency().equals(currency) &&
-                            c.getType().equals(type))
-                    .map(this::convertToDto)
-                    .collect(Collectors.toList());
-
-            if(currencyTypeIntersection.size() > 0)
-                mappings.put("CURRENCY_TYPE",currencyTypeIntersection);
-
-        } else {
-            mappings.put("TRIPLE",tripleIntersection);
-        }
-
-        return mappings;
     }
 
 }
