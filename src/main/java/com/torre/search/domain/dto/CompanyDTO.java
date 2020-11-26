@@ -1,6 +1,5 @@
 package com.torre.search.domain.dto;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
