@@ -1,7 +1,7 @@
 # search-analyst
 Coding Challenge
 
-For the description of the problem look at the file Subject.PNG
+For the description of the problem look at the file subject.PNG
 
 for running the program:
 https://torre-luisjavierjn.herokuapp.com/
